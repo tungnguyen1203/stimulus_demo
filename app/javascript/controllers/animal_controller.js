@@ -3,6 +3,7 @@ import Rails from "@rails/ujs"
 
 export default class extends Controller {
   static targets = ["entries", "pagination"]
+
   scroll(){
     let next_page = this.paginationTarget.querySelector("a[rel='next']")
     if (next_page == null){ return }
@@ -11,12 +12,14 @@ export default class extends Controller {
 
     var body = document.body,
         html = document.documentElement
-    var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight,
-                          html.offsetHeight)
-    if (window.pageYOffset >= height - window.innerHeight){
+    var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, 
+                          html.scrollHeight, html.offsetHeight)
+
+    if(window.pageYOffset >= height - window.innerHeight){
       this.loadMore(url)
     }
   }
+
   loadMore(url){
     Rails.ajax({
       type: 'GET',
@@ -28,4 +31,5 @@ export default class extends Controller {
       }
     });
   }
+
 }
